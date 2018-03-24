@@ -66,6 +66,9 @@ while True:
     elif finger_pin_inputs[3]:
         curr_finger = "pinky"
 
+    if sum(finger_pin_input_numbers) >= 4:
+        curr_finger = "all"        
+
     if not old_finger_pin_inputs == finger_pin_inputs:
         db.child(hand_status_path).set(finger_pin_inputs)
         db.child(curr_finger_path).set(curr_finger)
