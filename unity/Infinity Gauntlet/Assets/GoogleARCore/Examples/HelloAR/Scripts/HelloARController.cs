@@ -70,11 +70,8 @@ namespace GoogleARCore.HelloAR
         /// True if the app is in the process of quitting due to an ARCore connection error, otherwise false.
         /// </summary>
         private bool m_IsQuitting = false;
-
-        /// <summary>
-        /// True if the hand was added, otherwise false.
-        /// </summary>
-        private bool handAdded = false;
+        
+        private GameObject handObject;
 
         /// <summary>
         /// The Unity Update() method.
@@ -143,11 +140,11 @@ namespace GoogleARCore.HelloAR
 
             if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
             {
-                handAdded = true;
 
                 var handPosition = hit.Pose.position;
                 var handRotation = hit.Pose.rotation;
-                handPosition.y = handPosition.y + (float) 0.01;
+                handPosition.y = handPosition.y + (float) 0.05;
+                handPosition.z = handPosition.z - (float) 0.2;
                 handRotation.x = 0;
                 handRotation.y = 0;
                 handRotation.z = 0;
@@ -155,24 +152,32 @@ namespace GoogleARCore.HelloAR
 
                 handRotation.SetEulerRotation(3.14159265f, 3.14159265f, 0);
                 
-                var handObject = Instantiate(HandPrefab, handPosition, handRotation);
+                if (handObject != null)
+                {
+                    Destroy(handObject);
+                }
+               
+                handObject = Instantiate(HandPrefab, handPosition, handRotation);
 
                 // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                 // world evolves.
                 var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
-                // Andy should look at the camera but still be flush with the plane.
-                //if ((hit.Flags & TrackableHitFlags.PlaneWithinPolygon) != TrackableHitFlags.None)
-                //{
-                //    // Get the camera position and match the y-component with the hit position.
-                //    Vector3 cameraPositionSameY = FirstPersonCamera.transform.position;
-                //    cameraPositionSameY.y = hit.Pose.position.y;
+                // Andy should look at the camera but still be flush with the plane. 
+                if ((hit.Flags & TrackableHitFlags.PlaneWithinPolygon) != TrackableHitFlags.None) 
+                { 
+                    // Get the camera position and match the y-component with the hit position. 
+                    Vector3 cameraPositionSameY = FirstPersonCamera.transform.position;
+                    cameraPositionSameY.y = hit.Pose.position.y;
 
-                //    // Have Andy look toward the camera respecting his "up" perspective, which may be from ceiling.
-                //    handObject.transform.LookAt(cameraPositionSameY, handObject.transform.up);
-                //}
+                    
 
-                // Make Andy model a child of the anchor.
+                    // Have Andy look toward the camera respecting his "up" perspective, which may be from ceiling. 
+                    handObject.transform.LookAt(cameraPositionSameY, handObject.transform.up);
+                } 
+
+
+                // Make Hand model a child of the anchor.
                 handObject.transform.parent = anchor.transform;
             }
         }

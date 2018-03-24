@@ -17,7 +17,7 @@ public class RiggedHandScript : MonoBehaviour {
         //_ShowAndroidToastMessage("Hello from hand script");
         riggedHandAnimator = GetComponent<Animator>();
         updateCount = 0;
-        //currString = "Placed Hand";
+        currString = "Placed Hand";
         riggedHandAnimator.SetInteger("Target Finger", 0);
     }
 
