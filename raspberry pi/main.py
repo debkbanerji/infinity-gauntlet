@@ -39,8 +39,9 @@ GPIO.setup(NON_IDLE_PIN, GPIO.OUT)
 
 GPIO.output(INIT_PIN, GPIO.LOW)
 time.sleep(2)
+show_light_ref = db.child("show_light").get()
 GPIO.output(INIT_PIN, GPIO.HIGH)
-print("Starting FInger Listener")
+print("Starting Finger Listener")
 
 FINGER_PINS = [15, 13, 11, 7]
 
