@@ -143,56 +143,19 @@ namespace GoogleARCore.HelloAR
 
             if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
             {
-                // _ShowAndroidToastMessage(handAdded.ToString());
-                // _ShowAndroidToastMessage("Adding Hand");
+                _ShowAndroidToastMessage("Adding Hand");
                 handAdded = true;
 
                 var handPosition = hit.Pose.position;
                 var handRotation = hit.Pose.rotation;
-
-                // _ShowAndroidToastMessage(handPosition.ToString());
-
-                // handRotation.x = handRotation.x + (float) 0.1;
-                handPosition.y = handPosition.y + (float) 1.00;
-                // handPosition.y = handPosition.y - (float) 1.05;
-                // handPosition.y = (float) 0.5;
-                // handPosition.z = (float) 0.0;
-                // handPosition.x = (float) 0.0;
-                // handRotation.z = (handRotation.z + (float) 0.5);
-                // if (handRotation.z >= (float) 1.0)
-                // {
-                //     handRotation.z = (handRotation.z - (float) 2.0);
-                // }
-                // handRotation.z = 0;
-                // handPosition.x = 0;
-                // handPosition.y = 0;
-                // handPosition.z = 0;
+                handPosition.y = handPosition.y + (float) 0.01;
                 handRotation.x = 0;
                 handRotation.y = 0;
                 handRotation.z = 0;
                 handRotation.w = 0;
 
                 handRotation.SetEulerRotation(3.14159265f, 3.14159265f, 0);
-
-
-
-                // handRotation = Quaternion.RotateTowards(hit.Pose.rotation, new Quaternion(), 10000);
-
-                // var eulerAngles = handRotation.eulerAngles;
-                // _ShowAndroidToastMessage(eulerAngles.ToString());
-                // // handRotation.SetEulerRotation(eulerAngles);
-                // eulerAngles.z = 180;
-                // handPosition.y = handPosition.y + (float) 1.35;
-                // // eulerAngles.y = eulerAngles.y + 90;
-                // handRotation.SetEulerAngles(eulerAngles);
-
-
-                // handRotation.x = hit.Pose.rotation.x;
-                // handRotation.y = hit.Pose.rotation.y;
-                // handPosition.y = handPosition.y - (float) 0.35;
-
-
-
+                
                 var handObject = Instantiate(HandPrefab, handPosition, handRotation);
 
                 // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
