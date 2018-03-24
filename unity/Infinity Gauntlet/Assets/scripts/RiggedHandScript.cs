@@ -9,30 +9,34 @@ public class RiggedHandScript : MonoBehaviour {
     Animator riggedHandAnimator;
     int updateCount;
     private string currString;
+    private bool requestRunning = false;
 
     // Use this for initialization
     void Start () {
         //_ShowAndroidToastMessage("Hello from hand script");
         riggedHandAnimator = GetComponent<Animator>();
         updateCount = 0;
-        currString = "Init";
-        StartCoroutine(responseCoroutine());
+        currString = "Placed Hand";
         riggedHandAnimator.SetInteger("Target Finger", 0);
     }
 
     // Update is called once per frame
     void Update () {
-        updateCount = (updateCount + 1) % 250;
-        if (updateCount == 249)
+        if (!requestRunning)
         {
-            riggedHandAnimator.SetInteger("Target Finger", 1);
+            StartCoroutine(responseCoroutine());
+        }
+        updateCount = (updateCount + 1) % 60;
+        if (updateCount == 1)
+        {
             _ShowAndroidToastMessage(currString);
         }
     }
 
     IEnumerator responseCoroutine()
     {
-        UnityWebRequest www = UnityWebRequest.Get("http://www.debkbanerji.com");
+        requestRunning = true;
+        UnityWebRequest www = UnityWebRequest.Get("https://infinity-gauntlet.herokuapp.com/curr-finger");
         //WWW w = new WWW("www.google.com");
         //yield return new WaitUntil(() => w.bytesDownloaded > 0);
         //currString = w.ToString().Substring(0, 20);
@@ -50,16 +54,27 @@ public class RiggedHandScript : MonoBehaviour {
         {
             try
             {
-                // currString = www.downloadHandler.text;
-                currString = "Do Transition";
-                // riggedHandAnimator.SetInteger("Target Finger", 1);
-                currString = riggedHandAnimator.GetAnimatorTransitionInfo(0).ToString();
+                currString = www.downloadHandler.text;
+                // currString = "Do Transition";
+                // currString = riggedHandAnimator.GetAnimatorTransitionInfo(0).ToString();
+                int targetFinger = 0;
+                if (currString == "index")
+                {
+                    targetFinger = 1;
+                } else
+                {
+                    targetFinger = 0;
+                }
+                riggedHandAnimator.SetInteger("Target Finger", targetFinger);
+
             }
             catch (Exception e)
             {
                 currString = e.ToString();
             }
         }
+
+        requestRunning = false;
     }
 
     /// <summary>
