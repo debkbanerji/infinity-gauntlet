@@ -10,14 +10,14 @@ public class RiggedHandScript : MonoBehaviour {
     int updateCount;
     private string currString;
     private bool requestRunning = false;
-    private int updateFrames = 60;
+    private int updateFrames = 30;
 
     // Use this for initialization
     void Start () {
         //_ShowAndroidToastMessage("Hello from hand script");
         riggedHandAnimator = GetComponent<Animator>();
         updateCount = 0;
-        currString = "Placed Hand";
+        //currString = "Placed Hand";
         riggedHandAnimator.SetInteger("Target Finger", 0);
     }
 
