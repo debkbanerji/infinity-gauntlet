@@ -72,6 +72,9 @@ public class RiggedHandScript : MonoBehaviour {
                 } else if (currFinger == "pinky")
                 {
                     targetFinger = 4;
+                } else if (currFinger == "all")
+                {
+                    targetFinger = 5;
                 } else
                 {
                     targetFinger = 0;
