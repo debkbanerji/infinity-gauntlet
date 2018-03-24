@@ -10,6 +10,7 @@ public class RiggedHandScript : MonoBehaviour {
     int updateCount;
     private string currString;
     private bool requestRunning = false;
+    private int updateFrames = 60;
 
     // Use this for initialization
     void Start () {
@@ -26,8 +27,8 @@ public class RiggedHandScript : MonoBehaviour {
         {
             StartCoroutine(responseCoroutine());
         }
-        updateCount = (updateCount + 1) % 60;
-        if (updateCount == 1)
+        updateCount = (updateCount + 1) % updateFrames;
+        if (updateCount == updateFrames - 1)
         {
             _ShowAndroidToastMessage(currString);
         }
