@@ -75,6 +75,7 @@ ModelImporter:
     7400010: Move_Middle_Finger
     7400012: Move_Pinky_Finger
     7400014: Move_Ring_FInger
+    7400016: Move_Ring_Finger
     9500000: //RootNode
     13700000: Hand_L
   externalObjects: {}
