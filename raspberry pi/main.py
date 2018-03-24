@@ -48,14 +48,14 @@ FINGER_PINS = [15, 13, 11, 7]
 for FINGER_PIN in FINGER_PINS:
     GPIO.setup(FINGER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+old_finger_pin_inputs = []
+
 while True:
 
     finger_pin_inputs = [not GPIO.input(FINGER_PIN) for FINGER_PIN in FINGER_PINS]
 
     finger_pin_input_numbers = [1 if finger_pin_input else 0 for finger_pin_input in finger_pin_inputs]
     
-    db.child(hand_status_path).set(finger_pin_inputs)
-
     curr_finger = "idle"
     if finger_pin_inputs[0]:
         curr_finger = "index"
@@ -66,10 +66,13 @@ while True:
     elif finger_pin_inputs[3]:
         curr_finger = "pinky"
 
-    db.child(curr_finger_path).set(curr_finger)
+    if not old_finger_pin_inputs == finger_pin_inputs:
+        db.child(hand_status_path).set(finger_pin_inputs)
+        db.child(curr_finger_path).set(curr_finger)
     
     if sum(finger_pin_input_numbers) > 0:
-	GPIO.output(NON_IDLE_PIN, GPIO.HIGH)
+        GPIO.output(NON_IDLE_PIN, GPIO.HIGH)
     else:
-	GPIO.output(NON_IDLE_PIN, GPIO.LOW)
+        GPIO.output(NON_IDLE_PIN, GPIO.LOW)
  
+    old_finger_pin_inputs = list(finger_pin_inputs)

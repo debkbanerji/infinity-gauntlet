@@ -143,7 +143,7 @@ namespace GoogleARCore.HelloAR
 
             if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
             {
-                _ShowAndroidToastMessage("Adding Hand");
+                //_ShowAndroidToastMessage("Adding Hand");
                 handAdded = true;
 
                 var handPosition = hit.Pose.position;

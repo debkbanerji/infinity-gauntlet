@@ -55,12 +55,22 @@ public class RiggedHandScript : MonoBehaviour {
             try
             {
                 currString = www.downloadHandler.text;
+                string currFinger = www.downloadHandler.text; ;
                 // currString = "Do Transition";
                 // currString = riggedHandAnimator.GetAnimatorTransitionInfo(0).ToString();
                 int targetFinger = 0;
-                if (currString == "index")
+                if (currFinger == "index")
                 {
                     targetFinger = 1;
+                } else if (currFinger == "middle")
+                {
+                    targetFinger = 2;
+                } else if (currFinger == "ring")
+                {
+                    targetFinger = 3;
+                } else if (currFinger == "pinky")
+                {
+                    targetFinger = 4;
                 } else
                 {
                     targetFinger = 0;
