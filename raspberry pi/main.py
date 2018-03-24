@@ -55,21 +55,21 @@ while True:
     finger_pin_inputs = [not GPIO.input(FINGER_PIN) for FINGER_PIN in FINGER_PINS]
 
     finger_pin_input_numbers = [1 if finger_pin_input else 0 for finger_pin_input in finger_pin_inputs]
-    
-    curr_finger = "idle"
-    if finger_pin_inputs[0]:
-        curr_finger = "index"
-    elif finger_pin_inputs[1]:
-        curr_finger = "middle"
-    elif finger_pin_inputs[2]:
-        curr_finger = "ring"
-    elif finger_pin_inputs[3]:
-        curr_finger = "pinky"
-
-    if sum(finger_pin_input_numbers) >= 4:
-        curr_finger = "all"        
 
     if not old_finger_pin_inputs == finger_pin_inputs:
+        curr_finger = "idle"
+        if finger_pin_inputs[0]:
+            curr_finger = "index"
+        elif finger_pin_inputs[1]:
+            curr_finger = "middle"
+        elif finger_pin_inputs[2]:
+            curr_finger = "ring"
+        elif finger_pin_inputs[3]:
+            curr_finger = "pinky"
+
+        if sum(finger_pin_input_numbers) >= 4:
+            curr_finger = "all"   
+        
         db.child(hand_status_path).set(finger_pin_inputs)
         db.child(curr_finger_path).set(curr_finger)
     
