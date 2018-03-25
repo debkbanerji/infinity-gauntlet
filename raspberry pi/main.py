@@ -44,9 +44,13 @@ GPIO.output(INIT_PIN, GPIO.HIGH)
 print("Starting Finger Listener")
 
 FINGER_PINS = [15, 13, 11, 7]
+FINGER_LIGHT_PINS = [35, 33, 31, 29]
 
 for FINGER_PIN in FINGER_PINS:
     GPIO.setup(FINGER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+for FINGER_LIGHT_PIN in FINGER_LIGHT_PINS:
+    GPIO.setup(FINGER_LIGHT_PIN, GPIO.OUT)
 
 old_finger_pin_inputs = []
 
@@ -55,6 +59,12 @@ while True:
     finger_pin_inputs = [not GPIO.input(FINGER_PIN) for FINGER_PIN in FINGER_PINS]
 
     finger_pin_input_numbers = [1 if finger_pin_input else 0 for finger_pin_input in finger_pin_inputs]
+
+    for i in range(0, len(finger_pin_inputs)):
+	if finger_pin_inputs[i]:
+            GPIO.output(FINGER_LIGHT_PINS[i], GPIO.HIGH)
+	else:
+	    GPIO.output(FINGER_LIGHT_PINS[i], GPIO.LOW)
 
     if not old_finger_pin_inputs == finger_pin_inputs:
         curr_finger = "idle"
