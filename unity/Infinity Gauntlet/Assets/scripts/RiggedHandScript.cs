@@ -37,7 +37,7 @@ public class RiggedHandScript : MonoBehaviour {
     IEnumerator responseCoroutine()
     {
         requestRunning = true;
-        UnityWebRequest www = UnityWebRequest.Get("https://infinity-gauntlet.herokuapp.com/curr-finger");
+        UnityWebRequest www = UnityWebRequest.Get("https://infinitygauntlet.debkbanerji.com/curr-finger");
         //WWW w = new WWW("www.google.com");
         //yield return new WaitUntil(() => w.bytesDownloaded > 0);
         //currString = w.ToString().Substring(0, 20);
