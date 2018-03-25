@@ -62,6 +62,8 @@
             currFinger = 'tap'
         } else if (keyCode === keyCodeMap.f || keyCode === keyCodeMap.l || keyCode === keyCodeMap.r) {
             currFinger = 'all'
+        } else if (keyCode === keyCodeMap.s) {
+            currFinger = 'idle'
         }
         // console.log(currFinger);
         if (currFinger) {
