@@ -73,8 +73,8 @@ app.get('/hand', (req, res) => {
     res.send({hand_status: handStatus, curr_finger: currFinger});
 });
 
-app.get('/debug', (req, res) => {
-    res.sendfile('debug.html')
+app.get('/myo', (req, res) => {
+    res.sendfile('myo.html')
 });
 
 // Catch all other routes and return index

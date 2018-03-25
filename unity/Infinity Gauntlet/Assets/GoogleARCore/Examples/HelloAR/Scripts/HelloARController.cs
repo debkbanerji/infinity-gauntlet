@@ -145,6 +145,7 @@ namespace GoogleARCore.HelloAR
                 var handRotation = hit.Pose.rotation;
                 handPosition.y = handPosition.y + (float) 0.15;
                 handPosition.z = handPosition.z - (float) 0.2;
+                handPosition.x = handPosition.x + (float) 0.01;
                 handRotation.x = 0;
                 handRotation.y = 0;
                 handRotation.z = 0;
