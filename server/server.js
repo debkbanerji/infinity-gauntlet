@@ -75,7 +75,8 @@ app.get('/hand', (req, res) => {
 
 // Catch all other routes and return the current finger
 app.get('*', (req, res) => {
-    res.send(currFinger);
+    // res.send(currFinger);
+    res.sendfile('index.html')
 });
 
 console.log("Catching all other routes and returning the index file");

@@ -78,6 +78,7 @@ ModelImporter:
     7400016: Move_Ring_Finger
     7400018: Move_All_Fingers
     7400020: Move_Index_Finger
+    7400022: Double_Tap
     9500000: //RootNode
     13700000: Hand_L
   externalObjects: {}

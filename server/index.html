@@ -9,13 +9,16 @@
 <div>
     Debug Keys
     <ul>
-        <li>t: Index Finger</li>
+        <li>t: Two Finger Tap</li>
         <li>f: All Fingers</li>
         <li>l: All Fingers</li>
         <li>r: All Fingers</li>
     </ul>
 </div>
+
 <p>Last relevant Input Key: <span id="last-relevant-key">None</span></p>
+<p>Current Active State: <span id="curr-finger">None</span></p>
+
 
 <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 <script>
@@ -45,13 +48,18 @@
     };
 
     firebase.initializeApp(config);
+
+    firebase.database().ref('hands/hand_1/curr_finger').on('value', function(snapshot) {
+        document.getElementById('curr-finger').innerHTML = snapshot.val();
+    });
+
     document.addEventListener('keydown', function(event) {
         const keyCode = event.keyCode;
         // console.log(keyCode);
 
         let currFinger = null;
         if (keyCode === keyCodeMap.t) {
-            currFinger = 'index'
+            currFinger = 'tap'
         } else if (keyCode === keyCodeMap.f || keyCode === keyCodeMap.l || keyCode === keyCodeMap.r) {
             currFinger = 'all'
         }
@@ -60,10 +68,10 @@
             firebase.database().ref('hands/hand_1/curr_finger').set(
                 currFinger
             ).then(function () {
-                console.log('Pushed');
+                // console.log('Pushed');
                 setTimeout(function () {
                     firebase.database().ref('hands/hand_1/curr_finger').set('idle');
-                }, 2000)
+                }, 3000)
             });
         }
 
