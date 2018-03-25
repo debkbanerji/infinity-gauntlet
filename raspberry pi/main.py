@@ -77,7 +77,7 @@ while True:
         elif finger_pin_inputs[3]:
             curr_finger = "pinky"
 
-	print(str(finger_pin_inputs))
+	# print(str(finger_pin_inputs))
 	if finger_pin_inputs[1] and finger_pin_inputs[2]:
             curr_finger = "tap"
 
