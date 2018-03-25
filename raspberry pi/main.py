@@ -45,12 +45,16 @@ print("Starting Finger Listener")
 
 FINGER_PINS = [15, 13, 11, 7]
 FINGER_LIGHT_PINS = [35, 33, 31, 29]
+BIG_LIGHT_PIN = 37
+
 
 for FINGER_PIN in FINGER_PINS:
     GPIO.setup(FINGER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 for FINGER_LIGHT_PIN in FINGER_LIGHT_PINS:
     GPIO.setup(FINGER_LIGHT_PIN, GPIO.OUT)
+
+GPIO.setup(BIG_LIGHT_PIN, GPIO.OUT)
 
 old_finger_pin_inputs = []
 
@@ -83,6 +87,9 @@ while True:
 
         if sum(finger_pin_input_numbers) >= 4:
             curr_finger = "all"   
+	    GPIO.output(BIG_LIGHT_PIN, GPIO.HIGH)
+	else:
+	    GPIO.output(BIG_LIGHT_PIN, GPIO.LOW)
         
         db.child(hand_status_path).set(finger_pin_inputs)
         db.child(curr_finger_path).set(curr_finger)
