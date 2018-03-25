@@ -1,5 +1,5 @@
 # Infinity Gauntlet
-Phantom limb syndrome is a problem that affects approximately 60 to 80% of amputees. PLS leads to painful sensations when the brain sends signals to the amputated portion of the body.
+Phantom limb syndrome is an extremely large problem that affects approximately 60 to 80% of people who have undergone amputations. PLS leads to painful sensations when the brain sends signals to the amputated portion of the body.
 
 One of the more well known methods of treating PLS is the mirror box technique. A mirror box is a device that provides a reflection of the intact hand or limb that allows the patient to "move" the phantom limb, and to unclench it from potentially painful positions
 
