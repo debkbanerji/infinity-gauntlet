@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Infinity Gauntlet - Debug</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico?v=2">
+    <!--Bootstrap-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--&lt;!&ndash; Optional theme &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Infinity Gauntlet Myo Interface</h1>
+<div>
+    Myo Actions
+    <ul>
+        <li>Tap: Two Finger Tap</li>
+        <li>Fist: All Fingers</li>
+        <li>Spread Fingers: Idle</li>
+        <li>Left Wave: All Fingers</li>
+        <li>Right Wave: All Fingers</li>
+    </ul>
+</div>
+
+<p>Last Myo Action: <span id="last-relevant-key">None</span></p>
+<p>Current Active State: <span id="curr-finger">None</span></p>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+<script>
+    const config = {
+        apiKey: "AIzaSyCwJg2yNQ5n_gMaAaX45CqeKvVW7dz_byg",
+        authDomain: "infinity-gauntlet.firebaseapp.com",
+        databaseURL: "https://infinity-gauntlet.firebaseio.com",
+        projectId: "infinity-gauntlet",
+        storageBucket: "infinity-gauntlet.appspot.com",
+        messagingSenderId: "272863225901"
+    };
+
+    keyCodeMap = {
+        t: 84,
+        s: 83,
+        f: 70,
+        l: 76,
+        r: 82
+    };
+
+    reverseKeyCodeMap = {
+        '84': 'Tap',
+        '83': 'Spread',
+        '70': 'Fist',
+        '76': 'Left Wave',
+        '82': 'Right Wave'
+    };
+
+    firebase.initializeApp(config);
+
+    firebase.database().ref('hands/hand_1/curr_finger').on('value', function(snapshot) {
+        document.getElementById('curr-finger').innerHTML = snapshot.val();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        const keyCode = event.keyCode;
+        // console.log(keyCode);
+
+        let currFinger = null;
+        if (keyCode === keyCodeMap.t) {
+            currFinger = 'tap'
+        } else if (keyCode === keyCodeMap.f || keyCode === keyCodeMap.l || keyCode === keyCodeMap.r) {
+            currFinger = 'all'
+        } else if (keyCode === keyCodeMap.s) {
+            currFinger = 'idle'
+        }
+        // console.log(currFinger);
+        if (currFinger) {
+            firebase.database().ref('hands/hand_1/curr_finger').set(
+                currFinger
+            ).then(function () {
+                // console.log('Pushed');
+                setTimeout(function () {
+                    firebase.database().ref('hands/hand_1/curr_finger').set('idle');
+                }, 3000)
+            });
+        }
+
+        // console.log(reverseKeyCodeMap[keyCode.toString()]);
+        if (reverseKeyCodeMap[keyCode.toString()]) {
+            document.getElementById('last-relevant-key').innerHTML = reverseKeyCodeMap[keyCode.toString()];
+        }
+    });
+</script>
+</body>
+</html>

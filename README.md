@@ -1,2 +1,2 @@
-# infinity-gauntlet
+# Infinity Gauntlet
 Using AR to treat PLS
