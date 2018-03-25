@@ -77,6 +77,8 @@ app.get('/myo', (req, res) => {
     res.sendfile('myo.html')
 });
 
+app.use(express.static('.'));
+
 // Catch all other routes and return index
 app.get('*', (req, res) => {
     res.sendfile('index.html')
